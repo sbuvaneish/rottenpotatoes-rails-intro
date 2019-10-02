@@ -12,6 +12,10 @@ class MoviesController < ApplicationController
 
   def index
     
+    if !params[:reset_session].nil?
+      session.clear
+    end
+    
     if !params[:ratings].nil?
       session[:ratings] = params[:ratings]
     end
