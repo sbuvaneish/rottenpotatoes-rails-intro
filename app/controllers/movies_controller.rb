@@ -26,12 +26,12 @@ class MoviesController < ApplicationController
       session[:sort] = params[:sort]
     end
     
-    # Picks all unique ratings in the movies relation.
-    @all_ratings = Movie.distinct.pluck(:rating)
+    # Picks the list of ratings from the Movie model.
+    @all_ratings = Movie.all_ratings
     
     # Uses the ratings and sort information available in sessions to render the index page.
     if !session[:ratings].nil?
-      @movies = Movie.where(rating: session[:ratings].keys)
+      @movies = Movie.with_ratings(session[:ratings].keys)
     else
       @movies = Movie.all
     end
