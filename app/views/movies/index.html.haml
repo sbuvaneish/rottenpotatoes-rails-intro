@@ -1,8 +1,10 @@
 -#  This file is app/views/movies/index.html.haml
 %h2 All Movies
 
+// This link is used to clear the session.
 = link_to 'Reset Session', movies_path(:reset_session => true)
 
+// Checks the ratings depending on the values in the session[:ratings] hash
 = form_tag movies_path, :method => :get, :id => 'ratings_form' do
   Include:
   - @all_ratings.each do |rating|
@@ -10,6 +12,7 @@
     = check_box_tag "ratings[#{rating}]", 1, ("checked" if session[:ratings].nil? or !session[:ratings][rating].nil?), :id => 'ratings_#{rating}'
   = submit_tag 'Refresh', :class => 'btn btn-primary', :id => 'ratings_submit'
 
+// Conditional assignment of classes and color depending on the selected column to sort.
 %table#movies.table.table-striped.col-md-12
   %thead
     %tr

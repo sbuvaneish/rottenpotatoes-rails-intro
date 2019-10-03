@@ -12,10 +12,12 @@ class MoviesController < ApplicationController
 
   def index
     
+    # When the reset_session variable is set (through the Reset Session link), the session is cleared.
     if !params[:reset_session].nil?
       session.clear
     end
     
+    # Session key values are changed depending on whether those parameters are set in the get request.
     if !params[:ratings].nil?
       session[:ratings] = params[:ratings]
     end
@@ -24,8 +26,10 @@ class MoviesController < ApplicationController
       session[:sort] = params[:sort]
     end
     
+    # Picks all unique ratings in the movies relation.
     @all_ratings = Movie.distinct.pluck(:rating)
     
+    # Uses the ratings and sort information available in sessions to render the index page.
     if !session[:ratings].nil?
       @movies = Movie.where(rating: session[:ratings].keys)
     else
